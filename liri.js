@@ -4,7 +4,7 @@ var request = require('request');
 var keys = require('./keys.js');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
-var inquirer = require('inquirer');
+
 var myTweets = new Twitter({
 	consumer_key: keys.consumer_key,
  	consumer_secret: keys.consumer_secret,
@@ -12,8 +12,8 @@ var myTweets = new Twitter({
  	access_token_secret: keys.access_token_secret
 });
 var spotify = new Spotify({
-	id: '2f35d0fe7850444ebcda63dadc5234c9',
-	secret: '6e118de2f0a843298b85877e23502fed'
+	id: keys.twitterId,
+	secret: keys.twitterSecret
 });
  var liriDo = process.argv[2];
  var input = '';
@@ -21,23 +21,23 @@ var spotify = new Spotify({
 	input = input + ' ' +process.argv[i];
  	}	
 	input = input.trim();
-	console.log(input);
-
+var	log = [];		
 var	tweets = function(){
 	myTweets.get('statuses/user_timeline',function(error, tweets, response) {
 		if (!error) {
 			for (i = 0; i < tweets.length; i++) {
 				myText = tweets[i].text;
 				date = tweets[i].created_at;
-			var	logObject = {};
-				// logObject[date] = date;
-				// logObject[myText] = myText;
-				console.log('Date tweeted: ' +date +'\n' + 'Tweet: '+ myText + '\n');
-			}		
-		// fs.appendFile('./log.txt',logObject,'utf8');
+			theTweets = 'Date tweeted: ' +date +' ' + 'Tweet: '+ myText;
+			log.splice(i,0,theTweets); 
+				console.log(logTweets);
+			}	
+			console.log(log);
+			logToFile(liriDo,log);
+		} else {
+			return console.log(error);
 		}
-		return console.log(error);
-		});
+	});
 };
 var	spotifyIng = function (input) {
 	spotify.search({type: "track", query: '"'+input+'"', limit: 1},function(err,data) {
@@ -53,8 +53,10 @@ var	spotifyIng = function (input) {
 			for (var i = 0; i < artists.length; i++) {
 				artistList.push(artists[i].name);
 			}  
-			artistList.slice(' , ');  
-		console.log('Artist(s): '+ artistList + '\n' + 'Song: ' +song+ '\n' 	+ 'Preview Link: '+ previewLink + '\n' + 'Album: '+ album);
+			artistList.slice(' , ');
+		log = 'Artist(s): '+ artistList + '\n' + 'Song: ' +song+ '\n' 	+ 'Preview Link: '+ previewLink + '\n' + 'Album: '+ album;  
+		console.log(log);
+		logToFile(liriDo,log);					
 		});
 };
 var	movie = function (input){
@@ -81,13 +83,15 @@ var	movie = function (input){
 		var language = body.Language;
 		var plot = body.Plot;
 		var actors = body.Actors.toString();
-		console.log('Title: '+ title + '\n' + 'Year: ' +year+ '\n' 	+ 'Rating: '+ rating + '\n' +'Rotten Ketchup: '+ rotten  +
+		log = 'Title: '+ title + '\n' + 'Year: ' +year+ '\n' 	+ 'Rating: '+ rating + '\n' +'Rotten Ketchup: '+ rotten  +
 		'\n' + 'Country: ' + country + '\n' + 'Language: ' + language + '\n'+
-			'Plot: ' + plot + '\n' + 'Actors: ' + actors);
+			'Plot: ' + plot + '\n' + 'Actors: ' + actors;
+		console.log(log);
+		logToFile(liriDo,log);			
 	});
 }; 	
 liriThings = function(liriDo,input){
-	console.log(input + '' + liriDo);
+	console.log('liriDo is: '+ liriDo + ' ' +'\ninput is: ' + input);
 	if (liriDo === 'my-tweets') {
 		tweets();
 	} else if (liriDo === 'spotify-this-song') {
@@ -106,19 +110,19 @@ liriThings = function(liriDo,input){
 	} else if (liriDo === 'do-what-it-says'){
 // LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.//	
 		input = fs.readFileSync('./random.txt','utf8');
-		// console.log(input.split(','));
 		input = input.split(',');
-		// console.log(input[1]);
 		liriDo = input[0];
 		input = input[1];
 		liriThings(liriDo,input);
+		logToFile(liriDo,log);
 	}
 }	
 liriThings(liriDo,input);
-
-
-		
-
-
-
-
+var logToFile = function(liriDo, log) {
+	fs.appendFile('./log.txt','\n**Begin New Log @ ' +liriDo+ ' - logDate = ' + Date	()+'**' + '\n'+ 	log+ '\n**End New Log @ ' +liriDo+ '**','utf8',function	(error){
+			if(error){
+				return console.log('LOGGING ERROR! '+ error);
+			}
+			// console.log('logging success');
+		});	
+}

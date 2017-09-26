@@ -1,1 +1,19 @@
-utf8undefinedundefinedundefinedundefined
+
+**Begin New Log @movie-this - logDate = Mon Sep 25 2017 19:49:25 GMT-0600 (MDT)**
+Title: Mr. Nobody
+Year: 2009
+Rating: 7.9
+Rotten Ketchup: 64%
+Country: Belgium, Germany, Canada, France, USA, UK
+Language: English, Mohawk
+Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible.
+Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham
+**End New Log @movie-this**
+
+
+**Begin New Log @ spotify-this-song - logDate = Mon Sep 25 2017 19:55:28 GMT-0600 (MDT)**
+Artist(s): Selena Gomez
+Song: Bad Liar
+Preview Link: null
+Album: Bad Liar
+**End New Log @ spotify-this-song**
