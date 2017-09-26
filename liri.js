@@ -114,7 +114,7 @@ liriThings = function(liriDo,input){
 		liriDo = input[0];
 		input = input[1];
 		liriThings(liriDo,input);
-		logToFile(liriDo,log);
+		// logToFile(liriDo,log);
 	}
 }	
 liriThings(liriDo,input);
