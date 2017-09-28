@@ -28,11 +28,11 @@ var	tweets = function(){
 			for (i = 0; i < tweets.length; i++) {
 				myText = tweets[i].text;
 				date = tweets[i].created_at;
-			theTweets = 'Date tweeted: ' +date +' ' + 'Tweet: '+ myText;
+			theTweets = '{date: ' +date +' ' + ',tweet '+ myText + '}';
 			log.splice(i,0,theTweets); 
-				console.log(logTweets);
+				console.log(theTweets);
 			}	
-			console.log(log);
+			// console.log(log);
 			logToFile(liriDo,log);
 		} else {
 			return console.log(error);
@@ -91,7 +91,7 @@ var	movie = function (input){
 	});
 }; 	
 liriThings = function(liriDo,input){
-	console.log('liriDo is: '+ liriDo + ' ' +'\ninput is: ' + input);
+	// console.log('liriDo is: '+ liriDo + ' ' +'\ninput is: ' + input);
 	if (liriDo === 'my-tweets') {
 		tweets();
 	} else if (liriDo === 'spotify-this-song') {
@@ -119,7 +119,7 @@ liriThings = function(liriDo,input){
 }	
 liriThings(liriDo,input);
 var logToFile = function(liriDo, log) {
-	fs.appendFile('./log.txt','\n**Begin New Log @ ' +liriDo+ ' - logDate = ' + Date	()+'**' + '\n'+ 	log+ '\n**End New Log @ ' +liriDo+ '**','utf8',function	(error){
+	fs.appendFile('./log.txt','\n**Begin Log @ ' +liriDo+ ' - logDate = ' + Date	()+'**' + '\n'+ 	log+ '\n**End Log @ ' +liriDo+ '**','utf8',function	(error){
 			if(error){
 				return console.log('LOGGING ERROR! '+ error);
 			}
